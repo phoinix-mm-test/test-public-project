@@ -2,6 +2,10 @@ name: test-e2e
 
 on:
   workflow_dispatch:
+    inputs:
+      commit_sha:
+        type: string
+        required: false
 
 jobs:
   update-initial-status:
@@ -12,7 +16,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           repository_full_name: ${{ github.repository }}
-          commit_sha: ${{ github.sha }}
+          commit_sha: ${{ inputs.commit_sha || github.sha }}
           context: ci/e2e-test
           description: E2E tests
           status: pending
@@ -34,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           repository_full_name: ${{ github.repository }}
-          commit_sha: ${{ github.sha }}
+          commit_sha: ${{ inputs.commit_sha || github.sha }}
           context: ci/e2e-test
           description: E2E tests
           status: ${{ job.status }}
