@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: mattermost/actions/release/update-commit-status@main
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           repository_full_name: ${{ github.repository }}
           commit_sha: ${{ github.sha }}
@@ -28,6 +30,8 @@ jobs:
     needs: e2e
     steps:
       - uses: mattermost/actions/release/update-commit-status@main
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           repository_full_name: ${{ github.repository }}
           commit_sha: ${{ github.sha }}
