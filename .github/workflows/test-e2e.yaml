@@ -4,8 +4,33 @@ on:
   workflow_dispatch:
 
 jobs:
+  update-initial-status:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: mattermost/actions/release/update-commit-status@main
+        with:
+          repository_full_name: ${{ github.repository }}
+          commit_sha: ${{ github.sha }}
+          context: ci/e2e-test
+          description: E2E tests
+          status: pending
+
   e2e:
     runs-on: ubuntu-22.04
+    needs: update-initial-status
     steps:
       - run: |
           echo "This is an e2e test from the PR"
+
+  update-final-status:
+    runs-on: ubuntu-22.04
+    if: always()
+    needs: e2e
+    steps:
+      - uses: mattermost/actions/release/update-commit-status@main
+        with:
+          repository_full_name: ${{ github.repository }}
+          commit_sha: ${{ github.sha }}
+          context: ci/e2e-test
+          description: E2E tests
+          status: ${{ job.status }}
