@@ -9,3 +9,4 @@ jobs:
     steps:
       - run: |
           echo "What a nice weather"
+          echo "What a nice test"
