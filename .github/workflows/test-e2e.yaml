@@ -1,4 +1,4 @@
-name: test
+name: test-e2e
 
 on:
   workflow_dispatch:
@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: |
-          echo "This is an e2e test"
+          echo "This is an e2e test from the PR"
