@@ -11,3 +11,4 @@ jobs:
           echo "What a nice weather"
           echo "Forked line"
           echo "Another Forked Line"
+          echo "What a nice test"
