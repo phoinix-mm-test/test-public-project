@@ -27,6 +27,7 @@ jobs:
     steps:
       - run: |
           echo "This is an e2e test from the PR"
+          echo "Such good tests"
 
   update-final-status:
     runs-on: ubuntu-22.04
