@@ -9,4 +9,6 @@ jobs:
     steps:
       - run: |
           echo "What a nice weather"
+          echo "Forked line from the forked repo"
+          echo "Another Forked Line"
           echo "What a nice test"
