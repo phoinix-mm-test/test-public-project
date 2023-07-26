@@ -11,17 +11,24 @@ jobs:
   add-label:
     runs-on: ubuntu-22.04
     ## Only add label for contributors PRs
-    if: (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success')
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.fork
     permissions:
       issues: write
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - uses: dawidd6/action-download-artifact@0c49384d39ceb023b8040f480a25596fd6cf441b # v2.26.0
+        with:
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+          run_id: ${{ github.event.workflow_run.id }}
+          workflow_conclusion: success
+          name: pr_number
+
+      - run: |
+          ls -l
+          echo PR_NUMBER=$(cat ./pr/pr_number) >> $GITHUB_ENV
 
       - uses: mattermost/actions/delivery/add-labels@feat/label-actions
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           labels: PrivateTests
+          pr_number: ${{ env.PR_NUMBER }}
