@@ -22,9 +22,7 @@ jobs:
           workflow_conclusion: success
           name: pr_number
 
-      - run: |
-          ls -l
-          echo PR_NUMBER=$(cat ./pr/pr_number) >> $GITHUB_ENV
+      - run: echo PR_NUMBER=$(cat ./pr_number) >> $GITHUB_ENV
 
       - uses: mattermost/actions/delivery/add-labels@feat/label-actions
         env:
