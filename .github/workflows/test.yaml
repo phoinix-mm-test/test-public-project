@@ -13,6 +13,7 @@ jobs:
           echo "Another Forked Line"
           echo "What a nice test"
           echo "Best test ever"
+          echo "Another change"
 
   persist-pr-number:
     runs-on: ubuntu-22.04
