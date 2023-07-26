@@ -1,0 +1,27 @@
+name: add labels
+
+on:
+  workflow_run:
+    workflows:
+      - test
+    types:
+      - completed
+
+jobs:
+  add-label:
+    runs-on: ubuntu-22.04
+    ## Only add label for contributors PRs
+    if: (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success')
+    permissions:
+      issues: write
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - uses: mattermost/actions/delivery/add-labels@feat/label-actions
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          labels: PrivateTests

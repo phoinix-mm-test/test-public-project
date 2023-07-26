@@ -13,19 +13,3 @@ jobs:
           echo "Another Forked Line"
           echo "What a nice test"
           echo "Best test ever"
-
-  add-label:
-    runs-on: ubuntu-22.04
-    ## Only add label for contributors PRs
-    if: github.event.pull_request.base.repo.full_name != github.event.pull_request.head.repo.full_name
-    permissions:
-      issues: write
-      pull-requests: write
-    needs:
-      - testing
-    steps:
-      - uses: mattermost/actions/delivery/add-labels@feat/label-actions
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          labels: PrivateTests
